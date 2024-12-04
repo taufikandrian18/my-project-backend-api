@@ -34,7 +34,7 @@ header:
     token-param: "token"
     refresh-token-param: "refresh-token"
 password:
-    default: "wit.id"
+    default: "taufikandrian"
 common:
     config-routes-key: "config_routes"
     prefix-config-route-backoffice: "/backoffice/"
