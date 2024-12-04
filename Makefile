@@ -5,7 +5,7 @@ GOLANGCI_CMD := $(shell command -v golangci-lint 2> /dev/null)
 PKGS := $(shell go list ./... | grep -v /vendor/ | grep -v /internal/mock)
 ALL_PACKAGES := $(shell go list ./... | grep -v /vendor/ | grep -v /internal/mock)
 PG_MIGRATIONS_FOLDER=./scripts/pgbo/migrations
-PG_DB_URL=postgresql://postgres:Bandung2022@172.104.179.149:5432/wit-db?sslmode=disable
+PG_DB_URL=postgresql://postgres:AIYogRvfWMaeYVzMWCblyBoxYyrISAvw@autorack.proxy.rlwy.net:22974/railway?sslmode=disable
 
 CMD_SQLC := $(shell command -v sqlc 2> /dev/null)
 CMD_MIGRATE := $(shell command -v migrate 2> /dev/null)

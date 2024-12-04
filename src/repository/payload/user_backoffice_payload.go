@@ -154,8 +154,8 @@ func (payload *ListUserBackofficePayload) Validate() (err error) {
 
 func (payload *RegisterUserBackofficePayload) ToEntity(cfg config.KVStore, userData sqlc.GetUserBackofficeRow) (data sqlc.InsertUserBackofficeParams) {
 	// Generate Salt & Password
-	salt := utility.GeneratePasswordSalt(cfg)
-	password := utility.GeneratePassword(salt, cfg.GetString("password.default"))
+	salt := utility.GenerateSalt()
+	password := utility.HashPassword(cfg.GetString("password.default"), salt)
 
 	data = sqlc.InsertUserBackofficeParams{
 		Guid: utility.GenerateGoogleUUID(),

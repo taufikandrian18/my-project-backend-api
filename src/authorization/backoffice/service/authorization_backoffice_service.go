@@ -25,7 +25,7 @@ func (s *AuthorizationBackofficeService) Login(ctx context.Context, request payl
 	}
 
 	// Check user password valid
-	password := utility.GeneratePassword(userBackoffice.Salt, request.Password)
+	password := utility.HashPassword(request.Password, userBackoffice.Salt)
 	if password != userBackoffice.Password {
 		err = errors.WithStack(httpservice.ErrPasswordNotMatch)
 		return

@@ -2,12 +2,14 @@ package utility
 
 import (
 	"crypto/sha1"
+	"encoding/base64"
 	"fmt"
 	"io"
 	"math/rand"
 	"time"
 
 	"github.com/wit-id/blueprint-backend-go/toolkit/config"
+	"golang.org/x/crypto/scrypt"
 )
 
 // GeneratePassword ...
@@ -29,4 +31,16 @@ func GeneratePasswordSalt(cfg config.KVStore) string {
 	}
 
 	return string(b)
+}
+
+func GenerateSalt() string {
+	salt := make([]byte, 16)
+	rand.Read(salt)
+	return base64.URLEncoding.EncodeToString(salt)
+}
+
+func HashPassword(password, salt string) string {
+	saltedPassword := []byte(password + salt)
+	hashedPassword, _ := scrypt.Key(saltedPassword, []byte(salt), 16384, 8, 1, 32)
+	return base64.URLEncoding.EncodeToString(hashedPassword)
 }
