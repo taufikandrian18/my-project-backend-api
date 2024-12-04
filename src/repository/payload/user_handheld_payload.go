@@ -152,8 +152,8 @@ func (payload *ListUserHandheldPayload) Validate() (err error) {
 }
 
 func (payload *RegisterUserHandheldPayload) ToEntity(cfg config.KVStore) (data sqlc.InsertUserHandheldParams) {
-	salt := utility.GeneratePasswordSalt(cfg)
-	password := utility.GeneratePassword(salt, payload.Password)
+	salt := utility.GenerateSalt()
+	password := utility.HashPassword(cfg.GetString("password.default"), salt)
 
 	data = sqlc.InsertUserHandheldParams{
 		Guid:     utility.GenerateGoogleUUID(),
@@ -240,8 +240,8 @@ func (payload *UpdateUserHandheldFCMPayload) ToEntity(userData sqlc.UserHandheld
 
 func (payload *UpdateUserHandheldPasswordPayload) ToEntity(cfg config.KVStore, userData sqlc.UserHandheld) (data sqlc.UpdateUserHandheldPasswordParams) {
 	// Generate Salt & Password
-	salt := utility.GeneratePasswordSalt(cfg)
-	password := utility.GeneratePassword(salt, payload.NewPassword)
+	salt := utility.GenerateSalt()
+	password := utility.HashPassword(payload.NewPassword, salt)
 
 	data = sqlc.UpdateUserHandheldPasswordParams{
 		Password: password,

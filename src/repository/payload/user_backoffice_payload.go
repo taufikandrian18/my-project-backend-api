@@ -211,8 +211,8 @@ func (payload *UpdateUserBackofficePayload) ToEntity(userData sqlc.GetUserBackof
 
 func (payload *UpdateUserBackofficePasswordPayload) ToEntity(cfg config.KVStore, userData sqlc.GetUserBackofficeRow) (data sqlc.UpdateUserBackofficePasswordParams) {
 	// Generate Salt & Password
-	salt := utility.GeneratePasswordSalt(cfg)
-	password := utility.GeneratePassword(salt, payload.NewPassword)
+	salt := utility.GenerateSalt()
+	password := utility.HashPassword(payload.NewPassword, salt)
 
 	data = sqlc.UpdateUserBackofficePasswordParams{
 		Password: password,
